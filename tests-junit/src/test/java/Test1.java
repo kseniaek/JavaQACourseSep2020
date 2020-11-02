@@ -5,9 +5,12 @@ import org.aeonbits.owner.ConfigFactory;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.Cookie;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Set;
 
 public class Test1 {
 
@@ -31,6 +34,14 @@ public class Test1 {
 
     @Test
     public void openPage(){
+
+        Cookie myCookie = new Cookie("test", "test");//создаем куки
+        //driver.manage().addCookie(myCookie);
+        Set<Cookie> cookies = driver.manage().getCookies();//получаем все куки
+        driver.manage().getCookieNamed("test");//получить куки по имени
+        driver.manage().deleteCookieNamed("test");//удалит куки по имени
+        driver.manage().deleteAllCookies();//удалит все куки
+
         //driver.get("https://otus.ru/");
         driver.get(cfg.url());//открываем url из config.properties
         logger.info("Открыта страница otus");
