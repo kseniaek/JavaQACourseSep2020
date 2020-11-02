@@ -35,13 +35,6 @@ public class Test1 {
     @Test
     public void openPage(){
 
-        Cookie myCookie = new Cookie("test", "test");//создаем куки
-        //driver.manage().addCookie(myCookie);
-        Set<Cookie> cookies = driver.manage().getCookies();//получаем все куки
-        driver.manage().getCookieNamed("test");//получить куки по имени
-        driver.manage().deleteCookieNamed("test");//удалит куки по имени
-        driver.manage().deleteAllCookies();//удалит все куки
-
         //driver.get("https://otus.ru/");
         driver.get(cfg.url());//открываем url из config.properties
         logger.info("Открыта страница otus");
