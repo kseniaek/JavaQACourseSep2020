@@ -44,7 +44,8 @@ public class Test1 {
         //driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);//можно задать для загрузки страницы
         //driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
-        driver.get("https://220-volt.ru/catalog/2-0/");
+        driver.get("https://tomsk.220-volt.ru/catalog/2-0/");
+        //driver.get(cfg.url());
         driver.manage().window().maximize();
         logger.info("Открыта страница 220-volt.ru");
     }
