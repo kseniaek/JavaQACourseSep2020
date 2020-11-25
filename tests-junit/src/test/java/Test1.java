@@ -37,7 +37,7 @@ public class Test1 {
         Actions actions = new Actions(driver);
         WebElement element = driver.findElement(By.xpath(String.format(smthByText, elementText)));
         actions.moveToElement(element).build().perform();
-        logger.info("Курсор наведен на элемент");
+        logger.info("Курсор наведен на элемент с текстом: "+elementText);
     }
 
     public void clickElementByText(String elementText){
@@ -46,13 +46,13 @@ public class Test1 {
         WebDriverWait wait = new WebDriverWait(driver,30);
         wait.until(ExpectedConditions.elementToBeClickable(element));
         element.click();
-        logger.info("Клик по элементу");
+        logger.info("Клик по элементу с текстом: "+elementText);
     }
 
     public void clickElementByLabelText(String elementText){
         String locatorByText = "//label[contains(text(),'%s')]";
         driver.findElement(By.xpath(String.format(locatorByText, elementText))).click();
-        logger.info("Клик по элементу");
+        logger.info("Клик по элементу с текстом: "+elementText);
     }
 
     public void showItemsByFilter(){
@@ -69,7 +69,7 @@ public class Test1 {
     public void sortBy(String sortType){
         driver.findElement(By.xpath("//span[text()='Сортировать по:']/parent::p/following-sibling::span//span[@role='combobox']")).click();
         driver.findElement(By.xpath(String.format("//span[@class='select2-listing']//option[text()='%s']", sortType))).click();
-        logger.info("Отсортировано");
+        logger.info("Отсортировано по "+sortType);
     }
 
     public void addToComparison(String itemTitle){
@@ -80,7 +80,7 @@ public class Test1 {
         WebElement element = driver.findElement(By.xpath(String.format(locatorByText, itemTitle)));
         new Actions(driver).moveToElement(element).perform();
         element.click();
-        logger.info("Добавлено к сравнению");
+        logger.info("Добавлен к сравнению товар: "+itemTitle);
     }
 
     public void continueShoppingOrToComparison (String itemTitle){
@@ -102,6 +102,7 @@ public class Test1 {
             driver.switchTo().window(availableWindows.get(1));
         }
 
+        //проверка, что открыта верная вкладка, по заголовку страницы
         String pageName = driver.findElement(By.tagName("h1")).getText();
         Assert.assertEquals("Открыта не та страница", "Сравнение товаров", pageName);
 
@@ -112,6 +113,7 @@ public class Test1 {
             String text = items.get(i).getText();
             itemsTitle.add(text);
             Assert.assertTrue((text.contains(itemTitleText1)) || (text.contains(itemTitleText2)));
+            //сравнение текста элементов (товаров в сравнении) с ожидаемым
         }
 
         logger.info("Проверено наличие товаров в списке для сравнения");
