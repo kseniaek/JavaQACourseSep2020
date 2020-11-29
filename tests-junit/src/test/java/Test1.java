@@ -42,14 +42,16 @@ public class Test1 {
 
     public void clickElementByText(String elementText){
 
-        WebElement element = driver.findElement(By.xpath(String.format(smthByText, elementText)));
         WebDriverWait wait = new WebDriverWait(driver,30);
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-        element.click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(String.format(smthByText, elementText))));
+        driver.findElement(By.xpath(String.format(smthByText, elementText))).click();
         logger.info("Клик по элементу с текстом: "+elementText);
     }
 
     public void clickElementByLabelText(String elementText){
+        WebDriverWait wait = new WebDriverWait(driver,30);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(String.format(smthByText, elementText))));
+        //WebElement element = driver.findElement(By.xpath(String.format(smthByText, elementText)));
         String locatorByText = "//label[contains(text(),'%s')]";
         driver.findElement(By.xpath(String.format(locatorByText, elementText))).click();
         logger.info("Клик по элементу с текстом: "+elementText);
@@ -60,6 +62,8 @@ public class Test1 {
         WebDriverWait wait = new WebDriverWait(driver,30);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[text()=' Показать: ']/a")));
         WebElement element = driver.findElement(By.xpath("//div[text()=' Показать: ']/a"));
+        //wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='filterSubm']")));
+        //WebElement element = driver.findElement(By.xpath("//input[@id='filterSubm']"));
         new Actions(driver).moveToElement(element).perform();
         element.click();
         logger.info("Показаны выбранные позиции");
@@ -75,8 +79,9 @@ public class Test1 {
     public void addToComparison(String itemTitle){
         //String locatorByText = "//a[@rel='box' and @data-product-vendor='%s']/parent::div/following-sibling::div";
         String locatorByText ="//a[@rel='box' and @data-product-vendor='%s']/parent::div/following-sibling::div[2]//i[@title='Добавить к сравнению']";
-        //WebDriverWait wait = new WebDriverWait(driver,30);
+        WebDriverWait wait = new WebDriverWait(driver,30);
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(locatorByText))));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(String.format(locatorByText, itemTitle))));
         WebElement element = driver.findElement(By.xpath(String.format(locatorByText, itemTitle)));
         new Actions(driver).moveToElement(element).perform();
         element.click();
@@ -88,7 +93,7 @@ public class Test1 {
         WebDriverWait wait = new WebDriverWait(driver,30);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(locatorByText, itemTitle))));
         WebElement element = driver.findElement(By.xpath(String.format(locatorByText, itemTitle)));
-        //new Actions(driver).moveToElement(element).perform();
+        new Actions(driver).moveToElement(element).perform();
         element.click();
         logger.info("Выполнено действие "+itemTitle);
     }
