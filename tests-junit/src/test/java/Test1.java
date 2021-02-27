@@ -30,7 +30,7 @@ public class Test1 {
     @Test
     @Step("Проверка логирования")
     public void log(){
-        logger.info("Здесь просто информация..");
+        logger.info("Здесь просто информация...");
     }
 
     @Feature(value = "Other actions")
