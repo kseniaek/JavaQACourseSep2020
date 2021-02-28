@@ -26,26 +26,21 @@ public class Test1 {
     private ServerConfig cfg = ConfigFactory.create(ServerConfig.class);//теперь можно использовать owner
     //теперь сможем использовать например cfg.url и будет подставляться значение из config.properties
 
-    @Feature(value = "Other actions")
     @Test
-    @Step("Проверка логирования")
     public void log(){
         logger.info("Здесь просто информация...");
     }
 
-    @Feature(value = "Other actions")
     @Before
     public void setUp(){
-    WebDriverManager.chromedriver().setup();//используем WebDriverManager
-    driver = new ChromeDriver();
+    //WebDriverManager.chromedriver().setup();//используем WebDriverManager
+    //driver = new ChromeDriver();
+    WebDriver driver = WebDriverFactory.create("chrome");
     driver.manage().window().maximize();
     logger.info("Драйвер инициализирован");
 }
 
     @Test
-    @Feature(value = "Open Otus")
-    @Step("Проверка заголовка")
-    @Description(value = "Тест проверяет заголовок главной страницы")
     public void openPage(){
 
         //driver.get("https://otus.ru/");
@@ -58,9 +53,6 @@ public class Test1 {
     }
 
     @Test
-    @Feature(value = "Open Otus")
-    @Step("Проверка заголовка")
-    @Description(value = "Тест проверяет заголовок главной страницы")
     public void failAssert(){
         //специально падает, для отчета Allure
         //driver.get("https://otus.ru/");
@@ -70,8 +62,7 @@ public class Test1 {
         System.out.println("title: "+driver.getTitle());
         Allure.addAttachment("openPageFailAssert", new ByteArrayInputStream(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
     }
-
-    @Feature(value = "Other actions")
+    
     @After
     public void setDown(){
         if (driver != null){ //если драйвер не отключен, отулючить его
