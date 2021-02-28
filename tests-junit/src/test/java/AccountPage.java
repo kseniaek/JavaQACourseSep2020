@@ -5,9 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-
 import java.util.concurrent.TimeUnit;
 
 public class AccountPage {
@@ -17,7 +14,6 @@ public class AccountPage {
         this.driver = driver;
     }
 
-    ServerConfig cfg = ConfigFactory.create(ServerConfig.class);
     private Logger logger = LogManager.getLogger(MainTest.class);
 
     private By inputCountry= By.xpath("//p[contains(text(),'Страна')]/parent::div/following-sibling::div//input/following-sibling::div");
