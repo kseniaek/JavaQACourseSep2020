@@ -1,57 +1,45 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import static driver_names.DriverName.*;
 
 public class WebDriverFactory {
 
-    static WebDriver create(String webDriverName, String ...options) {
-        String webDriverNameLow = webDriverName.toLowerCase();
-        if (webDriverNameLow.equals("chrome")){
-            return createChromeDriver.createNewDriver();
+    public WebDriverFactory() {
+
+    }
+
+    public static WebDriver createNewDriver(String driverType, MutableCapabilities mc) throws Exception {
+        if (driverType.toLowerCase().equals(CHROME.name().toLowerCase())) {
+            WebDriverManager.chromedriver().setup();
+            return new ChromeDriver((ChromeOptions) mc);
+        } else if (driverType.toLowerCase().equals(FIREFOX.name().toLowerCase())) {
+            WebDriverManager.firefoxdriver().setup();
+            return new FirefoxDriver((FirefoxOptions) mc);
+        } else if (driverType.toLowerCase().equals(EDGE.name().toLowerCase())) {
+            WebDriverManager.firefoxdriver().setup();
+            return new EdgeDriver((EdgeOptions) mc);
         }
-        if (webDriverNameLow.equals("firefox")){
-            return createFirefoxDriver.createNewDriver();
+        throw new Exception("no such driver");
+    }
+
+    public static WebDriver createNewDriver(String driverType) throws Exception {
+        if (driverType.toLowerCase().equals(CHROME.name().toLowerCase())) {
+            WebDriverManager.chromedriver().setup();
+            return new ChromeDriver();
+        } else if (driverType.toLowerCase().equals(FIREFOX.name())) {
+            WebDriverManager.firefoxdriver().setup();
+            return new FirefoxDriver();
+        }  else if (driverType.toLowerCase().equals(EDGE.name())) {
+            WebDriverManager.firefoxdriver().setup();
+            return new EdgeDriver();
         }
-        else return null;
+        throw new Exception("no such driver");
     }
 }
-class createChromeDriver extends createDriver{
-    public static WebDriver createNewDriver(){
-        WebDriverManager.chromedriver().setup();
-        return new ChromeDriver();
-    }
-
-}
-class createFirefoxDriver extends createDriver{
-    public static WebDriver createNewDriver(){
-        WebDriverManager.firefoxdriver().setup();
-        return new FirefoxDriver();
-    }
-}
-
-class createDriver{
-    public static void createNewOption(String ...options) {
-    }
-
-    public static WebDriver createNewDriver() {
-        return null;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

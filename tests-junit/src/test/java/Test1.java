@@ -15,30 +15,42 @@ import org.openqa.selenium.Cookie;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.io.ByteArrayInputStream;
 import java.util.Set;
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class Test1 {
 
-    protected static WebDriver driver;
+    WebDriver driver;
     private Logger logger = LogManager.getLogger(Test1.class);//подключили логгер
     private ServerConfig cfg = ConfigFactory.create(ServerConfig.class);//теперь можно использовать owner
     //теперь сможем использовать например cfg.url и будет подставляться значение из config.properties
+
+
+    @Before
+    public void setUp() throws Exception {
+    //WebDriverManager.chromedriver().setup();//используем WebDriverManager
+    //driver = new ChromeDriver();
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
+        options.setHeadless(true);
+
+        String browser = System.getProperty("browser");
+        driver = WebDriverFactory.createNewDriver(browser, options);
+        driver.get(cfg.url());
+
+        logger.info(System.getProperty("browser"));
+}
 
     @Test
     public void log(){
         logger.info("Здесь просто информация...");
     }
-
-    @Before
-    public void setUp(){
-    //WebDriverManager.chromedriver().setup();//используем WebDriverManager
-    //driver = new ChromeDriver();
-    WebDriver driver = WebDriverFactory.create("chrome");
-    driver.manage().window().maximize();
-    logger.info("Драйвер инициализирован");
-}
 
     @Test
     public void openPage(){
@@ -65,7 +77,7 @@ public class Test1 {
     
     @After
     public void setDown(){
-        if (driver != null){ //если драйвер не отключен, отулючить его
+        if (driver != null){ //если драйвер не закрыт, закрыть
             driver.quit();
             logger.info("Драйвер закрыт");
         }
@@ -73,3 +85,5 @@ public class Test1 {
 
 
 }
+
+
