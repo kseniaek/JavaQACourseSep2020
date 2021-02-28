@@ -5,11 +5,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class WebDriverFactory {
+
     static WebDriver create(String webDriverName, String ...options) {
-        if (webDriverName.equals("chrome")){
+        String webDriverNameLow = webDriverName.toLowerCase();
+        if (webDriverNameLow.equals("chrome")){
             return createChromeDriver.createNewDriver();
         }
-        if (webDriverName.equals("firefox")){
+        if (webDriverNameLow.equals("firefox")){
             return createFirefoxDriver.createNewDriver();
         }
         else return null;
